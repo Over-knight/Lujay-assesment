@@ -1,0 +1,62 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+
+# Documentation
+*.md
+!README.md
+docs/
+ARCHITECTURE.md
+FINAL_IMPLEMENTATION_SUMMARY.md
+
+# Test files
+*_test.go
+tests/
+coverage.out
+*.coverage
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log
+
+# Dependencies (will be downloaded in Docker)
+vendor/
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other
+*.pem
+*.key
+*.crt

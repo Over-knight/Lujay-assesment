@@ -1,0 +1,1277 @@
+{
+	"info": {
+		"_postman_id": "lujay-api-collection-2025",
+		"name": "Lujay Vehicle Management API",
+		"description": "Complete API collection for Lujay Vehicle Management System with Authentication, Vehicles, Inspections, Transactions, and File Upload features.\n\n## Setup Instructions:\n1. Import this collection into Postman\n2. The collection uses variables - {{base_url}} is set to http://localhost:8080\n3. After login/register, the JWT token is automatically saved\n4. All authenticated requests will use the saved token\n\n## Quick Start:\n1. Run \"Register User\" to create an account\n2. The token will be saved automatically\n3. Run \"Create Vehicle\" to add a vehicle\n4. Run \"Upload Vehicle Images\" to test file upload\n5. Test other endpoints as needed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User (Dealer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"auth_token\", jsonData.token);",
+									"    pm.collectionVariables.set(\"user_id\", jsonData.user.id);",
+									"    console.log(\"Token saved: \" + jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"Dealer\",\n    \"email\": \"dealer@test.com\",\n    \"password\": \"Password123!\",\n    \"role\": \"dealer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account. Roles: admin, dealer, buyer"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User (Buyer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"auth_token\", jsonData.token);",
+									"    pm.collectionVariables.set(\"user_id\", jsonData.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"Buyer\",\n    \"email\": \"buyer@test.com\",\n    \"password\": \"Password123!\",\n    \"role\": \"buyer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"auth_token\", jsonData.token);",
+									"    pm.collectionVariables.set(\"user_id\", jsonData.user.id);",
+									"    console.log(\"Token saved: \" + jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dealer@test.com\",\n    \"password\": \"Password123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with email and password to get JWT token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Get current user profile (requires authentication)"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for user registration, login, and profile management"
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "Create Vehicle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"vehicle_id\", jsonData.vehicle.id);",
+									"    console.log(\"Vehicle ID saved: \" + jsonData.vehicle.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"Toyota\",\n    \"model\": \"Camry\",\n    \"year\": 2024,\n    \"price\": 45000,\n    \"mileage\": 0,\n    \"location\": {\n        \"city\": \"Lagos\",\n        \"state\": \"Lagos\",\n        \"country\": \"Nigeria\"\n    },\n    \"meta\": {\n        \"color\": \"black\",\n        \"transmission\": \"automatic\",\n        \"fuelType\": \"petrol\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles"
+							]
+						},
+						"description": "Create a new vehicle listing (requires authentication, dealer/admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "make",
+									"value": "Toyota",
+									"disabled": true
+								},
+								{
+									"key": "model",
+									"value": "Camry",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "30000",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "50000",
+									"disabled": true
+								},
+								{
+									"key": "condition",
+									"value": "new",
+									"disabled": true
+								},
+								{
+									"key": "fuelType",
+									"value": "petrol",
+									"disabled": true
+								},
+								{
+									"key": "transmission",
+									"value": "automatic",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get list of all vehicles with optional filters (public endpoint, cached)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vehicle by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}"
+							]
+						},
+						"description": "Get details of a specific vehicle (public endpoint, cached)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Vehicles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/my",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"my"
+							]
+						},
+						"description": "Get all vehicles owned by the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": 43000,\n    \"mileage\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}"
+							]
+						},
+						"description": "Update vehicle details (owner only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}"
+							]
+						},
+						"description": "Delete a vehicle (admin or dealer only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Vehicle management endpoints"
+		},
+		{
+			"name": "File Upload",
+			"item": [
+				{
+					"name": "Upload Vehicle Images",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.uploaded_images && jsonData.uploaded_images.length > 0) {",
+									"        pm.collectionVariables.set(\"image_public_id\", jsonData.uploaded_images[0].public_id);",
+									"        console.log(\"Image public_id saved: \" + jsonData.uploaded_images[0].public_id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}/images",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}",
+								"images"
+							]
+						},
+						"description": "Upload images for a vehicle (max 10 images, 10MB per file). Supports: jpg, jpeg, png, gif, webp.\n\n**Instructions:**\n1. Click on the first 'images' field\n2. Click 'Select Files' and choose image files\n3. Add more 'images' fields for multiple files (enable disabled fields)\n4. Send request"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vehicle Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}/images/{{image_public_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}",
+								"images",
+								"{{image_public_id}}"
+							]
+						},
+						"description": "Delete a specific image from a vehicle. Use the public_id from upload response."
+					},
+					"response": []
+				},
+				{
+					"name": "Set Primary Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}/images/{{image_public_id}}/primary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}",
+								"images",
+								"{{image_public_id}}",
+								"primary"
+							]
+						},
+						"description": "Set a specific image as the primary image for the vehicle"
+					},
+					"response": []
+				}
+			],
+			"description": "File upload endpoints for vehicle images using Cloudinary"
+		},
+		{
+			"name": "Inspections",
+			"item": [
+				{
+					"name": "Create Inspection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"inspection_id\", jsonData.inspection.id);",
+									"    console.log(\"Inspection ID saved: \" + jsonData.inspection.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"inspectorName\": \"John Inspector\",\n    \"inspectionDate\": \"2025-11-07T10:00:00Z\",\n    \"inspectionType\": \"pre-purchase\",\n    \"overallCondition\": \"good\",\n    \"mechanicalCondition\": \"excellent\",\n    \"bodyCondition\": \"good\",\n    \"interiorCondition\": \"excellent\",\n    \"notes\": \"Vehicle is in great condition. Minor paint scratches on rear bumper.\",\n    \"recommendations\": [\n        \"Replace rear brake pads within 3 months\",\n        \"Schedule next service in 5000 miles\"\n    ],\n    \"defects\": [\n        \"Minor paint scratch on rear bumper\"\n    ],\n    \"estimatedValue\": 42000\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections"
+							]
+						},
+						"description": "Create a new vehicle inspection (requires authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Inspections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get list of all inspections (public endpoint, cached)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inspection by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"{{inspection_id}}"
+							]
+						},
+						"description": "Get details of a specific inspection"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inspections by Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}/inspections",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}",
+								"inspections"
+							]
+						},
+						"description": "Get all inspections for a specific vehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Inspections",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/my",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"my"
+							]
+						},
+						"description": "Get all inspections created by the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Inspection",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"overallCondition\": \"excellent\",\n    \"notes\": \"Updated notes: Vehicle is in excellent condition after repairs.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"{{inspection_id}}"
+							]
+						},
+						"description": "Update inspection details (owner only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Inspection",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"{{inspection_id}}",
+								"complete"
+							]
+						},
+						"description": "Mark inspection as completed"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Inspection",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"{{inspection_id}}",
+								"cancel"
+							]
+						},
+						"description": "Cancel an inspection"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inspection",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"{{inspection_id}}"
+							]
+						},
+						"description": "Delete an inspection (admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Vehicle inspection management endpoints"
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Create Transaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"transaction_id\", jsonData.transaction.id);",
+									"    console.log(\"Transaction ID saved: \" + jsonData.transaction.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"transactionType\": \"sale\",\n    \"price\": 43000,\n    \"paymentMethod\": \"bank_transfer\",\n    \"paymentStatus\": \"pending\",\n    \"notes\": \"Sale to first buyer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions"
+							]
+						},
+						"description": "Create a new transaction (requires authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get list of all transactions (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"{{transaction_id}}"
+							]
+						},
+						"description": "Get details of a specific transaction"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions by Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/{{vehicle_id}}/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"{{vehicle_id}}",
+								"transactions"
+							]
+						},
+						"description": "Get all transactions for a specific vehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions/my",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"my"
+							]
+						},
+						"description": "Get all transactions for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"paymentStatus\": \"completed\",\n    \"notes\": \"Payment received via bank transfer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"{{transaction_id}}"
+							]
+						},
+						"description": "Update transaction details (owner only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"{{transaction_id}}",
+								"complete"
+							]
+						},
+						"description": "Mark transaction as completed"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transactions",
+								"{{transaction_id}}",
+								"cancel"
+							]
+						},
+						"description": "Cancel a transaction"
+					},
+					"response": []
+				}
+			],
+			"description": "Transaction management endpoints"
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Check API health status"
+			},
+			"response": []
+		},
+		{
+			"name": "Welcome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						""
+					]
+				},
+				"description": "API welcome message"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "inspection_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "transaction_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "image_public_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
