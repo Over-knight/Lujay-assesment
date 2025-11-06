@@ -611,7 +611,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"inspectorName\": \"John Inspector\",\n    \"inspectionDate\": \"2025-11-07T10:00:00Z\",\n    \"inspectionType\": \"pre-purchase\",\n    \"overallCondition\": \"good\",\n    \"mechanicalCondition\": \"excellent\",\n    \"bodyCondition\": \"good\",\n    \"interiorCondition\": \"excellent\",\n    \"notes\": \"Vehicle is in great condition. Minor paint scratches on rear bumper.\",\n    \"recommendations\": [\n        \"Replace rear brake pads within 3 months\",\n        \"Schedule next service in 5000 miles\"\n    ],\n    \"defects\": [\n        \"Minor paint scratch on rear bumper\"\n    ],\n    \"estimatedValue\": 42000\n}"
+							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"scheduledAt\": \"2025-11-08T10:00:00Z\",\n    \"notes\": \"Pre-purchase inspection requested\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/inspections",
@@ -764,7 +764,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"overallCondition\": \"excellent\",\n    \"notes\": \"Updated notes: Vehicle is in excellent condition after repairs.\"\n}"
+							"raw": "{\n    \"status\": \"in_progress\",\n    \"notes\": \"Updated notes: Vehicle inspection has been started.\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}",
@@ -796,7 +796,16 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"report\": {\n        \"overallCondition\": \"good\",\n        \"mechanicalScore\": 85,\n        \"exteriorScore\": 80,\n        \"interiorScore\": 90,\n        \"issues\": [\n            {\n                \"category\": \"mechanical\",\n                \"severity\": \"minor\",\n                \"description\": \"Brake pads need replacement soon\",\n                \"location\": \"Front brakes\"\n            }\n        ],\n        \"recommendations\": [\n            \"Replace brake pads within 3 months\",\n            \"Schedule next service in 5000 miles\"\n        ],\n        \"estimatedRepairs\": 500\n    },\n    \"notes\": \"Vehicle is in good condition overall. Minor maintenance required.\"\n}"
+						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/inspections/{{inspection_id}}/complete",
 							"host": [
@@ -920,7 +929,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"transactionType\": \"sale\",\n    \"price\": 43000,\n    \"paymentMethod\": \"bank_transfer\",\n    \"paymentStatus\": \"pending\",\n    \"notes\": \"Sale to first buyer\"\n}"
+							"raw": "{\n    \"vehicleId\": \"{{vehicle_id}}\",\n    \"buyerID\": \"{{user_id}}\",\n    \"amount\": 43000,\n    \"currency\": \"USD\",\n    \"paymentMethod\": \"bank_transfer\",\n    \"paymentDetails\": {\n        \"bankName\": \"Chase Bank\",\n        \"accountNumber\": \"****1234\"\n    },\n    \"inspectionId\": \"{{inspection_id}}\",\n    \"notes\": \"Sale to first buyer\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/transactions",
@@ -1093,7 +1102,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"paymentStatus\": \"completed\",\n    \"notes\": \"Payment received via bank transfer\"\n}"
+							"raw": "{\n    \"status\": \"completed\",\n    \"notes\": \"Payment received via bank transfer\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}",
@@ -1125,7 +1134,16 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionReference\": \"TXN-2025-001234\",\n    \"notes\": \"Transaction completed successfully via bank transfer\"\n}"
+						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/transactions/{{transaction_id}}/complete",
 							"host": [

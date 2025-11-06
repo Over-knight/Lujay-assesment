@@ -57,7 +57,11 @@ docker-compose logs -f app
 - `internal/cache` — Redis wrapper and rate-limit helpers
 - `internal/upload` — Cloudinary uploader abstraction
 - `internal/middleware` — auth, validation, caching middlewares
+- `internal/routes` — route setup and API endpoint configuration
 - `internal/models` — request/response and DB models
+- `internal/auth` — JWT token generation and validation
+- `internal/config` — configuration management
+- `internal/errors` — centralized error handling
 - `docker-compose.yml` & `Dockerfile` — containerization
 - `Lujay_API_Collection.postman_collection.json` — Postman collection
 
@@ -170,28 +174,39 @@ If you like what you see, please run the Postman flow (it’s fun — try upload
 Thank you for reading — may your logs be green and your builds fast! 🚗💨
 
 
-## Project Structure
+## Project Scaffold
 
 ```
 LUJAY ASSESMENT/
 ├─ cmd/
 │  └─ server/main.go          # Application entry point
 ├─ internal/
-│  ├─ auth/                   # Authentication logic
-│  ├─ handlers/               # HTTP handlers
-│  ├─ models/                 # Data models
-│  ├─ service/                # Business logic
-│  ├─ storage/                # Database layer
-│  └─ middleware/             # HTTP middleware
+│  ├─ auth/                   # JWT authentication logic
+│  ├─ cache/                  # Redis caching and rate limiting
+│  ├─ config/                 # Configuration management
+│  ├─ errors/                 # Centralized error handling
+│  ├─ handlers/               # HTTP handlers (Gin)
+│  ├─ middleware/             # Auth, validation, caching middlewares
+│  ├─ models/                 # Request/response and DB models
+│  ├─ routes/                 # API route setup
+│  ├─ service/                # Business logic layer
+│  ├─ storage/                # MongoDB client and collections
+│  └─ upload/                 # Cloudinary uploader abstraction
 ├─ pkg/
 │  └─ utils/                  # Utility functions
 ├─ scripts/                   # Build and deployment scripts
 ├─ tests/                     # Integration tests
-├─ Dockerfile
-├─ docker-compose.yml
-├─ .env.example
-├─ go.mod
-└─ README.md
+├─ Dockerfile                 # Multi-stage Docker build
+├─ docker-compose.yml         # Docker orchestration (app, MongoDB, Redis)
+├─ .dockerignore              # Docker build exclusions
+├─ .env                       # Environment variables (DO NOT COMMIT)
+├─ .env.example               # Example environment configuration
+├─ go.mod                     # Go module dependencies
+├─ go.sum                     # Dependency checksums
+├─ Lujay_API_Collection.postman_collection.json  # Postman API collection
+├─ DOCKER_TESTING_GUIDE.md    # Docker testing instructions
+├─ POSTMAN_GUIDE.md           # Postman usage guide
+└─ README.md                  # This file
 ```
 
 ## Getting Started
