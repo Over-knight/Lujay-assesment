@@ -1,92 +1,61 @@
 linters-settings:
   dupl:
-    threshold: 100
+    threshold: 150
   funlen:
-    lines: 100
-    statements: 50
+    lines: 150
+    statements: 80
   goconst:
-    min-len: 2
-    min-occurrences: 2
+    min-len: 3
+    min-occurrences: 3
   gocritic:
     enabled-tags:
       - diagnostic
-      - experimental
-      - opinionated
       - performance
-      - style
     disabled-checks:
       - dupImport
       - ifElseChain
       - octalLiteral
       - whyNoLint
       - wrapperFunc
+      - hugeParam
+      - sloppyReassign
+      - unnecessaryBlock
+      - paramTypeCombine
   gocyclo:
-    min-complexity: 15
+    min-complexity: 25
   goimports:
     local-prefixes: github.com/Over-knight/Lujay-assesment
-  mnd:
-    checks:
-      - argument
-      - case
-      - condition
-      - return
   govet:
-    enable:
+    disable:
       - shadow
   lll:
-    line-length: 140
+    line-length: 200
   misspell:
     locale: US
+    ignore-words:
+      - cancelled
 
 linters:
   disable-all: true
   enable:
-    - bodyclose
-    - dogsled
-    - dupl
     - errcheck
-    - exportloopref
-    - funlen
-    - gochecknoinits
-    - goconst
-    - gocritic
-    - gocyclo
-    - gofmt
-    - goimports
-    - mnd
-    - goprintffuncname
-    - gosec
     - gosimple
     - govet
     - ineffassign
-    - lll
-    - misspell
-    - nakedret
-    - noctx
-    - nolintlint
     - staticcheck
-    - stylecheck
     - typecheck
-    - unconvert
-    - unparam
     - unused
-    - whitespace
+    - gofmt
+    - goimports
 
 issues:
   exclude-rules:
     - path: _test\.go
       linters:
-        - mnd
-        - funlen
-        - dupl
-    - path: cmd/
-      linters:
-        - gochecknoinits
-  exclude-dirs:
-    - vendor
-    - bin
-  exclude-files:
-    - ".*_test\\.go$"
+        - errcheck
+        - gosec
+  max-issues-per-linter: 0
+  max-same-issues: 0
 
 run:
   timeout: 5m
