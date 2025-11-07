@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	apperrors "github.com/Over-knight/Lujay-assesment/internal/errors"
 	"github.com/gin-gonic/gin"
+
+	apperrors "github.com/Over-knight/Lujay-assesment/internal/errors"
 )
 
 // SanitizationMiddleware provides protection against injection attacks

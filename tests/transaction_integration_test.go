@@ -3,9 +3,10 @@ package tests
 import (
 	"testing"
 
-	"github.com/Over-knight/Lujay-assesment/internal/models"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/Over-knight/Lujay-assesment/internal/models"
 )
 
 // Integration tests for transaction functionality

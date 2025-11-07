@@ -9,6 +9,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/Over-knight/Lujay-assesment/internal/auth"
 	"github.com/Over-knight/Lujay-assesment/internal/cache"
 	"github.com/Over-knight/Lujay-assesment/internal/config"
@@ -17,7 +19,6 @@ import (
 	"github.com/Over-knight/Lujay-assesment/internal/service"
 	"github.com/Over-knight/Lujay-assesment/internal/storage"
 	"github.com/Over-knight/Lujay-assesment/internal/upload"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {

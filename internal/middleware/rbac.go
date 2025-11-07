@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Over-knight/Lujay-assesment/internal/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/Over-knight/Lujay-assesment/internal/models"
 )
 
 // RBACMiddleware creates a middleware that checks user roles

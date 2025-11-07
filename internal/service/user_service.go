@@ -5,11 +5,12 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Over-knight/Lujay-assesment/internal/auth"
-	"github.com/Over-knight/Lujay-assesment/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/Over-knight/Lujay-assesment/internal/auth"
+	"github.com/Over-knight/Lujay-assesment/internal/models"
 )
 
 // UserService handles user-related business logic

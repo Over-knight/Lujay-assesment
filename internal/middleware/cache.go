@@ -9,8 +9,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Over-knight/Lujay-assesment/internal/cache"
 	"github.com/gin-gonic/gin"
+
+	"github.com/Over-knight/Lujay-assesment/internal/cache"
 )
 
 // CacheMiddleware creates a middleware that caches GET requests

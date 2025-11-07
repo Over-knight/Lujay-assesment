@@ -3,8 +3,9 @@ package tests
 import (
 	"testing"
 
-	"github.com/Over-knight/Lujay-assesment/internal/errors"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/Over-knight/Lujay-assesment/internal/errors"
 )
 
 func TestAppError(t *testing.T) {

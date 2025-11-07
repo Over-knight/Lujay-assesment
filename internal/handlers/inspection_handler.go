@@ -4,11 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/Over-knight/Lujay-assesment/internal/middleware"
 	"github.com/Over-knight/Lujay-assesment/internal/models"
 	"github.com/Over-knight/Lujay-assesment/internal/service"
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // InspectionHandler handles inspection-related HTTP requests

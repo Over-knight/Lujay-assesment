@@ -3,12 +3,13 @@ package routes
 import (
 	"time"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/Over-knight/Lujay-assesment/internal/auth"
 	"github.com/Over-knight/Lujay-assesment/internal/cache"
 	"github.com/Over-knight/Lujay-assesment/internal/handlers"
 	"github.com/Over-knight/Lujay-assesment/internal/middleware"
 	"github.com/Over-knight/Lujay-assesment/internal/storage"
-	"github.com/gin-gonic/gin"
 )
 
 // SetupRoutes configures all application routes

@@ -6,13 +6,14 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/Over-knight/Lujay-assesment/internal/errors"
 	"github.com/Over-knight/Lujay-assesment/internal/middleware"
 	"github.com/Over-knight/Lujay-assesment/internal/models"
 	"github.com/Over-knight/Lujay-assesment/internal/service"
 	"github.com/Over-knight/Lujay-assesment/internal/upload"
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // UploadHandler handles file upload operations

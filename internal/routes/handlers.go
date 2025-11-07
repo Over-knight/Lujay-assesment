@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Over-knight/Lujay-assesment/internal/storage"
 	"github.com/gin-gonic/gin"
+
+	"github.com/Over-knight/Lujay-assesment/internal/storage"
 )
 
 // HealthCheck handles health check requests

@@ -5,12 +5,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Over-knight/Lujay-assesment/internal/auth"
-	"github.com/Over-knight/Lujay-assesment/internal/models"
-	"github.com/Over-knight/Lujay-assesment/internal/service"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/Over-knight/Lujay-assesment/internal/auth"
+	"github.com/Over-knight/Lujay-assesment/internal/models"
+	"github.com/Over-knight/Lujay-assesment/internal/service"
 )
 
 // MockVehicleService is a mock implementation of VehicleService for testing

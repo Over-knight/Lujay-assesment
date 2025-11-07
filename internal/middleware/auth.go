@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Over-knight/Lujay-assesment/internal/auth"
 	"github.com/gin-gonic/gin"
+
+	"github.com/Over-knight/Lujay-assesment/internal/auth"
 )
 
 // AuthMiddleware creates a middleware that validates JWT tokens
