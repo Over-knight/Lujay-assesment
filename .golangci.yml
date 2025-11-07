@@ -24,22 +24,17 @@ linters-settings:
     min-complexity: 15
   goimports:
     local-prefixes: github.com/Over-knight/Lujay-assesment
-  golint:
-    min-confidence: 0
-  gomnd:
-    settings:
-      mnd:
-        checks:
-          - argument
-          - case
-          - condition
-          - return
+  mnd:
+    checks:
+      - argument
+      - case
+      - condition
+      - return
   govet:
-    check-shadowing: true
+    enable:
+      - shadow
   lll:
     line-length: 140
-  maligned:
-    suggest-new: true
   misspell:
     locale: US
 
@@ -58,7 +53,7 @@ linters:
     - gocyclo
     - gofmt
     - goimports
-    - gomnd
+    - mnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -81,7 +76,7 @@ issues:
   exclude-rules:
     - path: _test\.go
       linters:
-        - gomnd
+        - mnd
         - funlen
         - dupl
     - path: cmd/
@@ -93,12 +88,12 @@ run:
   skip-dirs:
     - vendor
     - bin
-  skip-files:
+  exclude-files:
     - ".*_test.go"
 
 output:
-  format: colored-line-number
+  formats:
+    - format: colored-line-number
   print-issued-lines: true
   print-linter-name: true
-  uniq-by-line: true
   sort-results: true
