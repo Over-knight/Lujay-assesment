@@ -81,7 +81,7 @@ func (r *CreateInspectionRequest) Validate() error {
 		return errors.New("vehicleId is required")
 	}
 
-	if !primitive.IsValidObjectID(r.VehicleID) {
+	if _, err := primitive.ObjectIDFromHex(r.VehicleID); err != nil {
 		return errors.New("invalid vehicleId format")
 	}
 

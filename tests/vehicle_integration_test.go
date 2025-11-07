@@ -28,17 +28,17 @@ func NewMockVehicleService() *MockVehicleService {
 // CreateVehicle mock implementation
 func (m *MockVehicleService) CreateVehicle(ownerID string, req models.CreateVehicleRequest) (*models.Vehicle, error) {
 	vehicle := &models.Vehicle{
-		ID:      primitive.NewObjectID(),
-		OwnerID: primitive.NewObjectID(),
-		Make:    req.Make,
-		Model:   req.Model,
-		Year:    req.Year,
-		Price:   req.Price,
-		Mileage: req.Mileage,
-		Status:  models.VehicleStatusActive,
-		Location: req.Location,
-		Images:   req.Images,
-		Meta:     req.Meta,
+		ID:        primitive.NewObjectID(),
+		OwnerID:   primitive.NewObjectID(),
+		Make:      req.Make,
+		Model:     req.Model,
+		Year:      req.Year,
+		Price:     req.Price,
+		Mileage:   req.Mileage,
+		Status:    models.VehicleStatusActive,
+		Location:  req.Location,
+		Images:    req.Images,
+		Meta:      req.Meta,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -70,7 +70,7 @@ func TestVehicleCreation(t *testing.T) {
 
 	// Create mock service
 	mockService := NewMockVehicleService()
-	
+
 	// Create request body
 	reqBody := models.CreateVehicleRequest{
 		Make:    "Toyota",
@@ -95,7 +95,7 @@ func TestVehicleCreation(t *testing.T) {
 	t.Log("Vehicle creation endpoint structure validated")
 	t.Log("Mock service created:", mockService != nil)
 	t.Log("Token generated successfully")
-	
+
 	assert.NotNil(t, router)
 	assert.NotEmpty(t, token)
 	assert.NoError(t, reqBody.Validate())

@@ -443,9 +443,9 @@ docker-compose logs app | Select-String -Pattern "cloudinary"
 
 # 2. Verify Cloudinary credentials in .env
 # Should NOT be empty:
-# CLOUDINARY_CLOUD_NAME=dksiuqlwq
-# CLOUDINARY_API_KEY=516115242333556
-# CLOUDINARY_API_SECRET=F7KWWqkhLAybpNkoUWALiRBc6Q4
+# CLOUDINARY_CLOUD_NAME=your_cloud_name
+# CLOUDINARY_API_KEY=your_api_key
+# CLOUDINARY_API_SECRET=your_api_secret
 
 # 3. Restart app after .env changes
 docker-compose restart app

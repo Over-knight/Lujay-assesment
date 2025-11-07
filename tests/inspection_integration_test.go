@@ -14,7 +14,7 @@ import (
 func TestInspectionModelIntegration(t *testing.T) {
 	t.Run("complete inspection workflow", func(t *testing.T) {
 		vehicleID := primitive.NewObjectID().Hex()
-		
+
 		// Create request with comprehensive report
 		report := models.InspectionReport{
 			OverallCondition: "good",
@@ -41,18 +41,18 @@ func TestInspectionModelIntegration(t *testing.T) {
 				"Adjust headlight alignment",
 			},
 		}
-		
+
 		// Validate report
 		err := report.Validate()
 		assert.NoError(t, err)
-		
+
 		// Test inspection status validation
 		assert.True(t, models.IsValidInspectionStatus("pending"))
 		assert.True(t, models.IsValidInspectionStatus("scheduled"))
 		assert.True(t, models.IsValidInspectionStatus("completed"))
 		assert.True(t, models.IsValidInspectionStatus("cancelled"))
 		assert.False(t, models.IsValidInspectionStatus("invalid"))
-		
+
 		// Note: In production, would test with actual database operations
 		_ = vehicleID
 	})

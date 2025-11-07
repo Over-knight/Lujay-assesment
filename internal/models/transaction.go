@@ -115,7 +115,7 @@ func (r *CreateTransactionRequest) Validate() error {
 		return errors.New("vehicleId is required")
 	}
 
-	if !primitive.IsValidObjectID(r.VehicleID) {
+	if _, err := primitive.ObjectIDFromHex(r.VehicleID); err != nil {
 		return errors.New("invalid vehicleId format")
 	}
 
@@ -123,7 +123,7 @@ func (r *CreateTransactionRequest) Validate() error {
 		return errors.New("buyerId is required")
 	}
 
-	if !primitive.IsValidObjectID(r.BuyerID) {
+	if _, err := primitive.ObjectIDFromHex(r.BuyerID); err != nil {
 		return errors.New("invalid buyerId format")
 	}
 
@@ -144,8 +144,10 @@ func (r *CreateTransactionRequest) Validate() error {
 	}
 
 	// Validate inspection ID if provided
-	if r.InspectionID != "" && !primitive.IsValidObjectID(r.InspectionID) {
-		return errors.New("invalid inspectionId format")
+	if r.InspectionID != "" {
+		if _, err := primitive.ObjectIDFromHex(r.InspectionID); err != nil {
+			return errors.New("invalid inspectionId format")
+		}
 	}
 
 	// Validate payment details based on payment method

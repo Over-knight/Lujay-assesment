@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"io"
 	"net/http"
 	"time"
 
@@ -213,7 +212,7 @@ func RateLimitMiddleware(redisCache *cache.RedisCache, maxRequests int, window t
 			ttl, _ := redisCache.TTL(ctx, key)
 			c.Header("Retry-After", fmt.Sprintf("%.0f", ttl.Seconds()))
 			c.JSON(http.StatusTooManyRequests, gin.H{
-				"error": "Rate limit exceeded",
+				"error":               "Rate limit exceeded",
 				"retry_after_seconds": int(ttl.Seconds()),
 			})
 			c.Abort()
@@ -272,15 +271,4 @@ func ClearCache(c *gin.Context, redisCache *cache.RedisCache, pattern string) er
 		return redisCache.Delete(ctx, keys...)
 	}
 	return nil
-}
-
-// readBody reads the request body and restores it for further processing
-func readBody(c *gin.Context) ([]byte, error) {
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		return nil, err
-	}
-	// Restore the body for further reading
-	c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
-	return body, nil
 }

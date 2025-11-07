@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	apperrors "github.com/Over-knight/Lujay-assesment/internal/errors"
+	"github.com/gin-gonic/gin"
 )
 
 // SanitizationMiddleware provides protection against injection attacks
@@ -37,10 +37,10 @@ func sanitizeInput(input string) string {
 func removeScriptTags(input string) string {
 	scriptRegex := regexp.MustCompile(`(?i)<script[^>]*>.*?</script>`)
 	input = scriptRegex.ReplaceAllString(input, "")
-	
+
 	tagRegex := regexp.MustCompile(`<[^>]*>`)
 	input = tagRegex.ReplaceAllString(input, "")
-	
+
 	return input
 }
 
@@ -49,13 +49,13 @@ func removeNoSQLInjection(input string) string {
 	// Remove $-prefixed operators
 	operatorRegex := regexp.MustCompile(`\$[a-zA-Z]+`)
 	input = operatorRegex.ReplaceAllString(input, "")
-	
+
 	// Remove potential MongoDB operators in object notation
 	input = strings.ReplaceAll(input, "{", "")
 	input = strings.ReplaceAll(input, "}", "")
 	input = strings.ReplaceAll(input, "[", "")
 	input = strings.ReplaceAll(input, "]", "")
-	
+
 	return input
 }
 
@@ -63,7 +63,7 @@ func removeNoSQLInjection(input string) string {
 func ValidateQueryParams(allowedParams []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		queryParams := c.Request.URL.Query()
-		
+
 		for param := range queryParams {
 			if !contains(allowedParams, param) {
 				apperrors.RespondWithError(c, apperrors.NewBadRequestError("Invalid query parameter: "+param))
@@ -71,7 +71,7 @@ func ValidateQueryParams(allowedParams []string) gin.HandlerFunc {
 				return
 			}
 		}
-		
+
 		c.Next()
 	}
 }
@@ -113,7 +113,7 @@ func ValidateVehicleQueryParams() gin.HandlerFunc {
 		"minPrice", "maxPrice", "minYear", "maxYear",
 		"sortBy", "sortOrder",
 	}
-	
+
 	return func(c *gin.Context) {
 		ValidateQueryParams(allowedParams)(c)
 		if c.IsAborted() {
@@ -195,7 +195,7 @@ func ValidateVehicleQueryParams() gin.HandlerFunc {
 // ValidateInspectionQueryParams validates inspection-specific query parameters
 func ValidateInspectionQueryParams() gin.HandlerFunc {
 	allowedParams := []string{"page", "limit", "status"}
-	
+
 	return func(c *gin.Context) {
 		ValidateQueryParams(allowedParams)(c)
 		if c.IsAborted() {
@@ -219,7 +219,7 @@ func ValidateInspectionQueryParams() gin.HandlerFunc {
 // ValidateTransactionQueryParams validates transaction-specific query parameters
 func ValidateTransactionQueryParams() gin.HandlerFunc {
 	allowedParams := []string{"page", "limit", "status"}
-	
+
 	return func(c *gin.Context) {
 		ValidateQueryParams(allowedParams)(c)
 		if c.IsAborted() {
@@ -247,7 +247,7 @@ func BasicRateLimitMiddleware() gin.HandlerFunc {
 		// Add rate limiting headers
 		c.Header("X-RateLimit-Limit", "1000")
 		c.Header("X-RateLimit-Remaining", "999")
-		
+
 		// In production, implement proper rate limiting with Redis or similar
 		c.Next()
 	}
@@ -261,7 +261,7 @@ func SecurityHeadersMiddleware() gin.HandlerFunc {
 		c.Header("X-XSS-Protection", "1; mode=block")
 		c.Header("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
 		c.Header("Content-Security-Policy", "default-src 'self'")
-		
+
 		c.Next()
 	}
 }

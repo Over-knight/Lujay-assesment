@@ -260,8 +260,8 @@ func TestUpdateVehicleRequest_Validate(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Empty update",
-			req:  UpdateVehicleRequest{},
+			name:    "Empty update",
+			req:     UpdateVehicleRequest{},
 			wantErr: false,
 		},
 		{

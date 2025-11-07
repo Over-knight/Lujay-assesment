@@ -104,13 +104,13 @@ func (s *TransactionService) CreateTransaction(ctx context.Context, req *models.
 // calculateFinancingDetails calculates monthly payment and financed amount
 func (s *TransactionService) calculateFinancingDetails(txn *models.Transaction) {
 	txn.PaymentDetails.FinancedAmount = txn.Amount - txn.PaymentDetails.DownPayment
-	
+
 	// Calculate monthly payment using simple interest
 	// Monthly payment = (Principal + Interest) / Number of months
 	principal := txn.PaymentDetails.FinancedAmount
 	monthlyInterestRate := txn.PaymentDetails.InterestRate / 100 / 12
 	months := float64(txn.PaymentDetails.FinancingTerms)
-	
+
 	if monthlyInterestRate > 0 {
 		// Using loan formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
 		monthlyPayment := principal * (monthlyInterestRate * pow(1+monthlyInterestRate, months)) / (pow(1+monthlyInterestRate, months) - 1)
@@ -294,11 +294,11 @@ func (s *TransactionService) CompleteTransaction(ctx context.Context, id string,
 		now := time.Now()
 		update := bson.M{
 			"$set": bson.M{
-				"status":                        models.TransactionStatusCompleted,
-				"completedAt":                   now,
-				"updatedAt":                     now,
+				"status":                              models.TransactionStatusCompleted,
+				"completedAt":                         now,
+				"updatedAt":                           now,
 				"paymentDetails.transactionReference": req.TransactionReference,
-				"paymentDetails.paidAt":         now,
+				"paymentDetails.paidAt":               now,
 			},
 		}
 

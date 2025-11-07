@@ -40,18 +40,18 @@ type ValidationErrorResponse struct {
 
 // Error codes
 const (
-	ErrCodeBadRequest          = "BAD_REQUEST"
-	ErrCodeUnauthorized        = "UNAUTHORIZED"
-	ErrCodeForbidden           = "FORBIDDEN"
-	ErrCodeNotFound            = "NOT_FOUND"
-	ErrCodeConflict            = "CONFLICT"
-	ErrCodeValidation          = "VALIDATION_ERROR"
-	ErrCodeInternalServer      = "INTERNAL_SERVER_ERROR"
-	ErrCodeDatabaseError       = "DATABASE_ERROR"
-	ErrCodeInvalidToken        = "INVALID_TOKEN"
-	ErrCodeExpiredToken        = "EXPIRED_TOKEN"
-	ErrCodeInvalidCredentials  = "INVALID_CREDENTIALS"
-	ErrCodeResourceExists      = "RESOURCE_EXISTS"
+	ErrCodeBadRequest              = "BAD_REQUEST"
+	ErrCodeUnauthorized            = "UNAUTHORIZED"
+	ErrCodeForbidden               = "FORBIDDEN"
+	ErrCodeNotFound                = "NOT_FOUND"
+	ErrCodeConflict                = "CONFLICT"
+	ErrCodeValidation              = "VALIDATION_ERROR"
+	ErrCodeInternalServer          = "INTERNAL_SERVER_ERROR"
+	ErrCodeDatabaseError           = "DATABASE_ERROR"
+	ErrCodeInvalidToken            = "INVALID_TOKEN"
+	ErrCodeExpiredToken            = "EXPIRED_TOKEN"
+	ErrCodeInvalidCredentials      = "INVALID_CREDENTIALS"
+	ErrCodeResourceExists          = "RESOURCE_EXISTS"
 	ErrCodeInsufficientPermissions = "INSUFFICIENT_PERMISSIONS"
 )
 
