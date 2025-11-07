@@ -82,14 +82,14 @@ issues:
     - path: cmd/
       linters:
         - gochecknoinits
-
-run:
-  timeout: 5m
-  skip-dirs:
+  exclude-dirs:
     - vendor
     - bin
   exclude-files:
-    - ".*_test.go"
+    - ".*_test\\.go$"
+
+run:
+  timeout: 5m
 
 output:
   formats:
